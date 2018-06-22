@@ -6,6 +6,9 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * eeeeeee
+ */
 public class Book {
     private String isbn;
 //    @NotBlank(message="{bookName.not.null}")

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace用于配置映射的数据操作接口，内容是接口的名称 -->
+<mapper namespace="com.lingshi.bookstore.dao.BookMapper">
+    <resultMap id="bookMap" type="Book">
+        <id column="isbn" property="isbn"/>
+        <result column="book_name" property="bookName"/>
+        <result column="price" property="price"/>
+        <result column="publish_date" property="publishDate"/>
+        <result column="publisher" property="publisher"/>
+        <result column="book_image" property="bookImage"/>
+        <!-- 多对一或一对一     -->
+        <association property="category" column="category_id"  resultMap="categoryMap"/>
+    </resultMap>
+    <resultMap id="categoryMap" type="Category">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <!--查找全部书籍-->
+    <select id="findAll" resultMap="bookMap" >
+        SELECT * FROM book b LEFT JOIN category c ON b.category_id = c.id
+    </select>
+
+    <select id="findBookById" parameterType="String" resultMap="bookMap">
+        SELECT b.*,c.* FROM book b,category c WHERE b.isbn = #{isbn} and b.category_id = c.id
+    </select>
+
+    <select id="findBookByExample" parameterType="Book" resultMap="bookMap">
+        select * from book b,category c
+        <where>
+            b.category_id = c.id
+          <if test="bookName != null">
+            and b.book_name like concat(concat('%',#{bookName},'%'))
+          </if>
+        </where>
+    </select>
+
+    <insert id="addBook" parameterType="Book">
+        insert into book
+        values(#{isbn},#{bookName},#{price},#{publishDate},#{bookImage},#{publisher},#{category.id})
+    </insert>
+    
+    <update id="editBook" parameterType="Book">
+        update book
+        <set>
+            <if test="bookName != null">
+                book_name = #{bookName},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="publishDate != null">
+                publish_date = #{publishDate},
+            </if>
+            <if test="bookImage != null">
+                book_image = #{bookImage},
+            </if>
+            <if test="publisher != null" >
+                publisher = #{publisher},
+            </if>
+            <if test="category.id != 0">
+                category_id = #{category.id}
+            </if>
+        </set>
+        where isbn = #{isbn}
+    </update>
+
+    <delete id="deleteBookById" parameterType="String">
+        delete from book where isbn = #{isbn}
+    </delete>
+
+    <!--sql语句块-->
+    <sql id="selectBookCondition">
+        <where>
+            <if test="param != null and param.bookName != null">
+                book_name like concat(concat('%',#{param.bookName},'%'))
+            </if>
+            <if test="param != null and param.price != null">
+                <![CDATA[
+                  price <= #{param.price}
+                ]]>
+            </if>
+        </where>
+    </sql>
+    <!--分页查询-->
+    <select id="findByPager" parameterType="Pager" resultMap="bookMap">
+        select b.*,c.* from book b left join category c on b.category_id = c.id
+        <include refid="selectBookCondition"/>
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <select id="countForPager" parameterType="Pager" resultType="int">
+        select count(isbn) from book
+        <include refid="selectBookCondition"/>
+    </select>
+
+
+</mapper>

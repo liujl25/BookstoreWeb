@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace用于配置映射的数据操作接口，内容是接口的名称 -->
+<mapper namespace="com.lingshi.bookstore.dao.CategoryMapper">
+    <resultMap id="categoryMap" type="Category">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="books"  ofType="Book">
+            <id column="isbn" property="isbn"/>
+            <result column="book_name" property="bookName"/>
+            <result column="price" property="price"/>
+            <result column="publish_date" property="publishDate"/>
+            <result column="publisher" property="publisher"/>
+            <result column="category_id" property="category.id"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultType="Category">
+        select * from category
+    </select>
+
+    <select id="findAllWithBook" resultMap="categoryMap">
+        select c.*,b.* from category c left join book b on c.id = b.category_id
+    </select>
+
+    <insert id="addCategory" parameterType="Category" useGeneratedKeys="true" keyColumn="id">
+        insert into categorry values(#{name})
+    </insert>
+
+    <update id="editCategory" parameterType="Category">
+        update category set name = #{name}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        delete from category where id = #{id}
+    </delete>
+
+</mapper>

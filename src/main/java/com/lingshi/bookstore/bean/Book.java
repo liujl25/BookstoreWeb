@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * eeeeeee
+ * eeeeeee???????
  */
 public class Book {
     private String isbn;

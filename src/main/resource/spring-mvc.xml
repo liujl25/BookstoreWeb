@@ -78,7 +78,10 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!--拦截器-->
     <mvc:interceptors>
+        <!-- 对所有请求都拦截，公共拦截器可以有多个 -->
+        <!--<bean name="baseInterceptor" class="com..." />-->
         <mvc:interceptor>
+            <!-- 特定请求的拦截器只能有一个 -->
             <!--拦截所有的mvc（控制）操作-->
             <mvc:mapping path="/**"/>
             <!--对于不需要拦截的地址，使用exclude-mapping排除（解除controller）-->

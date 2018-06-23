@@ -38,6 +38,7 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+    <!--自定义过滤器-->
     <filter>
         <filter-name>SessionFilter</filter-name>
         <filter-class>com.lingshi.bookstore.filter.LoginFilter</filter-class>
@@ -57,9 +58,8 @@
       <param-value>classpath:spring-mvc.xml</param-value>
     </init-param>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>springmvc</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern>*.action</url-pattern>
   </servlet-mapping>
 </web-app>

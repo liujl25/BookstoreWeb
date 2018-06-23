@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     //在拦截点执行前执行，如果返回false则不执行拦截点后的操作，true则不拦截
         HttpSession session = request.getSession();
         String url = request.getRequestURI();

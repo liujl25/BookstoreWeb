@@ -76,7 +76,8 @@ public class BookController {
     		//去除所有的校验错误或字段错误
     		List<ObjectError> errors = vResult.getAllErrors();
     		for (ObjectError objectError : errors) {
-				logger.debug(objectError.getObjectName()+","+objectError.getDefaultMessage());
+				logger.debug("args:"+objectError.getArguments()+",code:"+objectError.getCode()+",codes:"+objectError.getCodes()+
+				        ",onjname:"+objectError.getObjectName()+",msg:"+objectError.getDefaultMessage());
 			}
     		//把异常信息传回页面进行显示- 	
     		model.addAttribute("errors", errors);//使用request作用于传回页面

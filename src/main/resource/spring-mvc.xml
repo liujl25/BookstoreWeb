@@ -30,6 +30,8 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
             </set>
         </property>
     </bean>
+
+
     <!-- 注册转化器  validator="validator"-->
     <mvc:annotation-driven conversion-service="conversion-service" validator="validator"/>
 	<!-- 校验器，配置validator -->

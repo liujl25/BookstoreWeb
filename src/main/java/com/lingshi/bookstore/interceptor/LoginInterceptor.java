@@ -9,16 +9,16 @@ import javax.servlet.http.HttpSession;
 
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
     //在拦截点执行前执行，如果返回false则不执行拦截点后的操作，true则不拦截
-        HttpSession session = httpServletRequest.getSession();
-        String url = httpServletRequest.getRequestURI();
+        HttpSession session = request.getSession();
+        String url = request.getRequestURI();
         if(session.getAttribute("LOGIN_USER") != null
                /* || url.indexOf("system/login.action")>0*/){ //说明登录成功
            return true;
         }else {
             //拦截后进入登录页面
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/pages/login.jsp");
+            response.sendRedirect(request.getContextPath()+"/pages/login.jsp");
             return false;
         }
 

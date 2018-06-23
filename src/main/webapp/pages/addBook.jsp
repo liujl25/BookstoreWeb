@@ -24,7 +24,8 @@
 	<c:if test="${errors != null }">
 		输入有误:<br>
 		<c:forEach items="${errors }" var="er">
-			<c:out value="${er.defaultMessage }"/></br>
+            <c:out value="objname:${er.objectName}"/>
+			<c:out value="message:${er.defaultMessage }"/></br>
 		</c:forEach>
 	</c:if>
     <div class="col-md-12 col-md-offset-3">

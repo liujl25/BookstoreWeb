@@ -32,7 +32,6 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     </bean>
     <!-- 注册转化器  validator="validator"-->
     <mvc:annotation-driven conversion-service="conversion-service" validator="validator"/>
-
 	<!-- 校验器，配置validator -->
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
@@ -52,13 +51,15 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
         <!-- 对资源文件内容缓存的时间，单位秒 -->
         <property name="cacheSeconds" value="120"></property>
     </bean>
+
 	<!-- 国际化消息处理    Spring默认根据-->
-	 <!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" >-->
-         <!--<property name="defaultLocale" value="zh"/>-->
-     <!--</bean>-->
+	<!-- <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" >
+         <property name="defaultLocale" value="zh"/>
+     </bean>-->
 
     <!--异常处理-->
 	<bean class="com.lingshi.bookstore.exception.CustomException"></bean>
+
     <!--配置上传组件-->
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
